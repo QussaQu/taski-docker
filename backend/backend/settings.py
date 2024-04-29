@@ -1,13 +1,17 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-j_89af+30&&4qm*8z9_(^zz8p4-ho8z_m6ylm0s$h!-p@on1_^'
+SECRET_KEY = os.getenv('SECRET_KEY', 'secret')
 
-DEBUG = False
+DEBUG = os.getenv('DEBUG_VALUE', False) == 'True'
 
-ALLOWED_HOSTS = ['84.252.143.218', 'localhost', '127.0.0.0', 'qu3-taski.hopto.org']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1').split()
 
 INSTALLED_APPS = [
     'api.apps.ApiConfig',
@@ -55,10 +59,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'django'),
-        'USER': os.getenv('POSTGRES_USER', 'django'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'django_pass'),
-        'HOST': os.getenv('DB_HOST', 'db'),
+        'NAME': os.getenv('POSTGRES_DB', ''),
+        'USER': os.getenv('POSTGRES_USER', ''),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', ''),
         'PORT': os.getenv('DB_PORT', 5432)
     }
 }
